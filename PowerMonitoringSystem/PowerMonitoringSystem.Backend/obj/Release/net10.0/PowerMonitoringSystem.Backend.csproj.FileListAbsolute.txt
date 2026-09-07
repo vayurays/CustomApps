@@ -1,0 +1,15 @@
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.csproj.AssemblyReference.cache
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.GeneratedMSBuildEditorConfig.editorconfig
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.AssemblyInfoInputs.cache
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.AssemblyInfo.cs
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.csproj.CoreCompileInputs.cache
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\bin\Release\net10.0\PowerMonitoringSystem.deps.json
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\bin\Release\net10.0\PowerMonitoringSystem.dll
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\bin\Release\net10.0\PowerMonitoringSystem.pdb
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\bin\Release\net10.0\VayuRays.Core.dll
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\bin\Release\net10.0\VayuRays.Core.pdb
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMon.91CD5945.Up2Date
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.dll
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\refint\PowerMonitoringSystem.dll
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.pdb
+c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\ref\PowerMonitoringSystem.dll
