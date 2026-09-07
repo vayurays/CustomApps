@@ -1242,7 +1242,7 @@ export const Configuration: React.FC<Props> = ({
       )}
 
       {/* Interactive User Help Manual Modal */}
-      <HelpManualModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
+      <HelpManualModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} theme={theme} />
     </div>
   );
 };

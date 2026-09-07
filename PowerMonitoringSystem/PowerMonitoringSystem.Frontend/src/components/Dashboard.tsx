@@ -704,7 +704,7 @@ export const Dashboard: React.FC<Props> = ({ onOpenConfig, token = '', theme = '
       </div>
 
       {/* Interactive User Help Manual Modal */}
-      <HelpManualModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
+      <HelpManualModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} theme={theme} />
     </div>
   );
 };

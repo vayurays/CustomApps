@@ -13,3 +13,4 @@ c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release
 c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\refint\PowerMonitoringSystem.dll
 c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.pdb
 c:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\ref\PowerMonitoringSystem.dll
+C:\TT\CustomApps\PowerMonitoringSystem\PowerMonitoringSystem.Backend\obj\Release\net10.0\PowerMonitoringSystem.Backend.sourcelink.json
