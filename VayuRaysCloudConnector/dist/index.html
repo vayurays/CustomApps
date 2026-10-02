@@ -1,1 +1,231 @@
-<h1>Cloud Connector UI</h1><p>Frontend will be placed here.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Connector Configuration</title>
+    <!-- Use Bootstrap for clean, standard UI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding: 20px; background-color: #f8f9fa; }
+        .card { box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; border: none; }
+        .card-header { background-color: #0d6efd; color: white; font-weight: bold; }
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 1055; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="mb-4">☁️ Cloud Connector Configuration</h2>
+
+    <form id="configForm">
+        <div class="row">
+            <!-- Left Column: Settings -->
+            <div class="col-md-7">
+                
+                <!-- Identity Card -->
+                <div class="card">
+                    <div class="card-header">1. Gateway Identity</div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Site ID</label>
+                                <input type="text" class="form-control" id="siteId" required>
+                                <div class="form-text">e.g., mumbai-plant-01</div>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Device ID</label>
+                                <input type="text" class="form-control" id="deviceId" required>
+                                <div class="form-text">e.g., BESS_Gateway</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Broker Card -->
+                <div class="card">
+                    <div class="card-header">2. MQTT Broker Connection</div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <label class="form-label">Broker Address</label>
+                                <input type="text" class="form-control" id="brokerAddress" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Port</label>
+                                <input type="number" class="form-control" id="brokerPort" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Username (Optional)</label>
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Password (Optional)</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="useTls">
+                            <label class="form-check-label" for="useTls">Enable TLS/SSL Encryption</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Card -->
+                <div class="card">
+                    <div class="card-header">3. Performance & Heartbeat</div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Publish Speed</label>
+                            <select class="form-select" id="publishSpeed">
+                                <option value="1">RealTime (Every 1 second) - Lowest Latency</option>
+                                <option value="5">Standard (Every 5 seconds) - Recommended</option>
+                                <option value="30">Economy (Every 30 seconds) - Lowest Cost</option>
+                            </select>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="enableHeartbeat">
+                            <label class="form-check-label" for="enableHeartbeat">Enable Status Heartbeat</label>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Heartbeat Interval (Seconds)</label>
+                            <input type="number" class="form-control" id="heartbeatInterval" min="10" max="3600">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Points -->
+            <div class="col-md-5">
+                <div class="card h-100">
+                    <div class="card-header">4. Selected Points to Publish</div>
+                    <div class="card-body">
+                        <p class="text-muted small">Enter the Point Identifiers you want to push to the cloud, one per line.</p>
+                        <textarea class="form-control font-monospace" id="selectedPoints" rows="20" placeholder="e.g.&#10;ActivePower_kW&#10;SoC&#10;GridVoltage_L1"></textarea>
+                    </div>
+                    <div class="card-footer bg-white border-top-0 pb-3 text-end">
+                        <button type="submit" class="btn btn-primary btn-lg px-5" id="saveBtn">Save Configuration</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Success Toast -->
+<div class="toast-container">
+    <div id="saveToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Configuration saved successfully! The background service will apply changes on the next tick.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const API_URL = "/api/customapps/cloudconnector/config";
+    let loadedConfig = {};
+
+    // Get JWT token from iframe URL parameters if provided by VayuRays WebClient
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    
+    function getHeaders() {
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        return headers;
+    }
+
+    async function loadConfig() {
+        try {
+            const res = await fetch(API_URL, { headers: getHeaders() });
+            if (!res.ok) throw new Error("Failed to fetch configuration");
+            
+            loadedConfig = await res.json();
+            
+            // Populate form
+            document.getElementById('siteId').value = loadedConfig.siteId || "default-site";
+            document.getElementById('deviceId').value = loadedConfig.deviceId || "VayuRays_Gateway";
+            
+            document.getElementById('brokerAddress').value = loadedConfig.brokerAddress || "localhost";
+            document.getElementById('brokerPort').value = loadedConfig.brokerPort || 1883;
+            document.getElementById('username').value = loadedConfig.username || "";
+            document.getElementById('password').value = loadedConfig.password || "";
+            document.getElementById('useTls').checked = loadedConfig.useTls === true;
+            
+            document.getElementById('publishSpeed').value = loadedConfig.publishSpeed || 5;
+            document.getElementById('enableHeartbeat').checked = loadedConfig.enableHeartbeat !== false;
+            document.getElementById('heartbeatInterval').value = loadedConfig.heartbeatIntervalSeconds || 60;
+            
+            if (loadedConfig.selectedPoints && loadedConfig.selectedPoints.length > 0) {
+                document.getElementById('selectedPoints').value = loadedConfig.selectedPoints.join('\n');
+            } else {
+                document.getElementById('selectedPoints').value = "";
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error loading configuration. Is the VayuRays backend running?");
+        }
+    }
+
+    document.getElementById('configForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.disabled = true;
+        saveBtn.innerText = "Saving...";
+
+        // Split textarea by lines, remove empty lines and trim whitespace
+        const pointsText = document.getElementById('selectedPoints').value;
+        const selectedPointsArray = pointsText.split('\n')
+            .map(p => p.trim())
+            .filter(p => p.length > 0);
+
+        // Merge updates into loaded config object to preserve unmodified fields (like Topics)
+        const updatedConfig = {
+            ...loadedConfig,
+            siteId: document.getElementById('siteId').value,
+            deviceId: document.getElementById('deviceId').value,
+            brokerAddress: document.getElementById('brokerAddress').value,
+            brokerPort: parseInt(document.getElementById('brokerPort').value),
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            useTls: document.getElementById('useTls').checked,
+            publishSpeed: parseInt(document.getElementById('publishSpeed').value),
+            enableHeartbeat: document.getElementById('enableHeartbeat').checked,
+            heartbeatIntervalSeconds: parseInt(document.getElementById('heartbeatInterval').value),
+            selectedPoints: selectedPointsArray
+        };
+
+        try {
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: getHeaders(),
+                body: JSON.stringify(updatedConfig)
+            });
+
+            if (!res.ok) throw new Error("Failed to save configuration");
+
+            // Show success toast
+            const toastEl = document.getElementById('saveToast');
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        } catch (err) {
+            console.error(err);
+            alert("Error saving configuration.");
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.innerText = "Save Configuration";
+        }
+    });
+
+    // Init
+    loadConfig();
+</script>
+</body>
+</html>

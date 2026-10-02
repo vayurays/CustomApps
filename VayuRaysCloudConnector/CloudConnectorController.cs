@@ -36,7 +36,10 @@ public class CloudConnectorController : ControllerBase
 
         try
         {
-            _configManager.SaveConfig(config);
+            // Extract the user making the change via the standard JWT identity pipeline
+            var modifiedBy = User.Identity?.Name ?? "System_Admin";
+            
+            _configManager.SaveConfig(config, modifiedBy);
             return Ok(new { success = true });
         }
         catch (Exception ex)
