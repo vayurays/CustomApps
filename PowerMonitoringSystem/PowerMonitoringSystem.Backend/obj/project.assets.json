@@ -99,11 +99,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\PowerMonitoringSystem.Backend.csproj",
+      "projectUniqueName": "C:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\PowerMonitoringSystem.Backend.csproj",
       "projectName": "PowerMonitoringSystem",
-      "projectPath": "c:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\PowerMonitoringSystem.Backend.csproj",
+      "projectPath": "C:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\PowerMonitoringSystem.Backend.csproj",
       "packagesPath": "C:\\Users\\dpkat\\.nuget\\packages\\",
-      "outputPath": "c:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\obj\\",
+      "outputPath": "C:\\TT\\CustomApps\\PowerMonitoringSystem\\PowerMonitoringSystem.Backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -168,7 +168,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
